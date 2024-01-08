@@ -6,6 +6,7 @@ import { Application } from "express";
 import http from "http";
 import { healthRoutes } from "@notifications/routes";
 import { checkConnection } from "@notifications/elasticsearch";
+import { createConnection } from "@notifications/queues/connection";
 
 const SERVER_PORT = 8001;
 const log: Logger = winstonLogger(
@@ -21,7 +22,9 @@ const start = (app: Application): void => {
   startElasticSearch();
 };
 
-const startQueues = async (): Promise<void> => {};
+const startQueues = async (): Promise<void> => {
+  createConnection();
+};
 
 const startElasticSearch = (): void => {
   checkConnection();
