@@ -9,7 +9,7 @@ const config: Config.InitialOptions = {
   transform: {
     "^.+\\.ts?$": "ts-jest",
   },
-  testMatch: ["<rootDir>/tests/**/*.test.ts"],
+  testMatch: ["<rootDir>/src/tests/**/*.test.ts"],
   collectCoverageFrom: ["<rootDir>/src/**/*.ts", "!**/node_modules/**"],
   coverageThreshold: {
     global: {
@@ -21,8 +21,8 @@ const config: Config.InitialOptions = {
   },
   coverageReporters: ["text-summary", "lcov"],
   moduleNameMapper: {
-    "@notifications/(.*)": ["<rootDir>/src/$1"],
-  },
+    '@notifications/(.*)': ['<rootDir>/src/$1']
+  }
 };
 
 export default config;

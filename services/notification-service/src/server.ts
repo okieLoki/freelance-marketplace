@@ -8,10 +8,7 @@ import { healthRoutes } from "@notifications/routes";
 import { checkConnection } from "@notifications/elasticsearch";
 import { createConnection } from "@notifications/queues/connection";
 import { Channel } from "amqplib";
-import {
-  consumeAuthEmailMessages,
-  consumeOrderEmail,
-} from "./queues/email.consumer";
+import { consumeAuthEmailMessages } from "./queues/email.consumer";
 
 const SERVER_PORT = 8001;
 const log: Logger = winstonLogger(
