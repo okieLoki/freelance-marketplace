@@ -7,6 +7,11 @@ import http from "http";
 import { healthRoutes } from "@notifications/routes";
 import { checkConnection } from "@notifications/elasticsearch";
 import { createConnection } from "@notifications/queues/connection";
+import { Channel } from "amqplib";
+import {
+  consumeAuthEmailMessages,
+  consumeOrderEmail,
+} from "./queues/email.consumer";
 
 const SERVER_PORT = 8001;
 const log: Logger = winstonLogger(
@@ -23,7 +28,25 @@ const start = (app: Application): void => {
 };
 
 const startQueues = async (): Promise<void> => {
-  createConnection();
+  const emailChannel: Channel = await createConnection();
+
+  await emailChannel.assertExchange("jobber-email-queue", "direct");
+
+  const dataToSendToQueueForTest = {
+    recieverEmail: `${config.SENDER_EMAIL}`,
+    username: "uddeepta",
+    verifyLink: "https://www.google.com",
+    resetLink: "https://www.google.com",
+    template: "verifyEmail",
+  };
+
+  await emailChannel.publish(
+    "jobber-email-queue",
+    "auth-email",
+    Buffer.from(JSON.stringify(dataToSendToQueueForTest)),
+  );
+
+  await consumeAuthEmailMessages(emailChannel);
 };
 
 const startElasticSearch = (): void => {
