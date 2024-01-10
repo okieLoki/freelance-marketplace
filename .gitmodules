@@ -1,0 +1,3 @@
+[submodule "shared/jobber-shared"]
+	path = shared/jobber-shared
+	url = https://github.com/okieLoki/jobber-shared
