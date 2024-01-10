@@ -17,7 +17,7 @@ const consumeAuthEmailMessages = async (channel: Channel): Promise<void> => {
             channel = await createConnection();
         }
 
-        const exhangeName: string = "jobber-email-queue";
+        const exhangeName: string = "jobber-email-notification";
         const routingKey: string = "auth-email";
         const queueName: string = "auth-email-queue";
 
@@ -57,7 +57,7 @@ const consumeAuthEmailMessages = async (channel: Channel): Promise<void> => {
     }
 };
 
-const consumeOrderEmail = async (channel: Channel): Promise<void> => {
+const consumeOrderEmailMessages = async (channel: Channel): Promise<void> => {
     try {
         if (!channel) {
             channel = await createConnection();
@@ -153,4 +153,4 @@ const consumeOrderEmail = async (channel: Channel): Promise<void> => {
     }
 };
 
-export { consumeAuthEmailMessages, consumeOrderEmail };
+export { consumeAuthEmailMessages, consumeOrderEmailMessages };

@@ -7,7 +7,7 @@
     "build": "tsc && tsc-alias -p tsconfig.json",
     "start": "node dist/app.js",
     "dev": "nodemon -r tsconfig-paths/register src/app.ts | pino-pretty -c",
-    "test": "jest",
+    "test": "jest --coverage=true -w=1 --forceExit --detectOpenHandles --watchAll=false",
     "format": "prettier --write ."
   },
   "keywords": [],
