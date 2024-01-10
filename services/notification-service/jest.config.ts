@@ -1,28 +1,28 @@
-import type { Config } from '@jest/types';
+import type { Config } from "@jest/types";
 
 const config: Config.InitialOptions = {
-    preset: 'ts-jest',
-    testEnvironment: 'node',
-    verbose: true,
-    coverageDirectory: 'coverage',
-    testPathIgnorePatterns: ['/node_modules'],
-    transform: {
-        '^.+\\.ts?$': 'ts-jest',
+  preset: "ts-jest",
+  testEnvironment: "node",
+  verbose: true,
+  coverageDirectory: "coverage",
+  testPathIgnorePatterns: ["/node_modules"],
+  transform: {
+    "^.+\\.ts?$": "ts-jest",
+  },
+  testMatch: ["<rootDir>/tests/**/*.test.ts"],
+  collectCoverageFrom: ["<rootDir>/src/**/*.ts", "!**/node_modules/**"],
+  coverageThreshold: {
+    global: {
+      branches: 1,
+      functions: 1,
+      lines: 1,
+      statements: 1,
     },
-    testMatch: ['<rootDir>/tests/**/*.test.ts'],
-    collectCoverageFrom: ['<rootDir>/src/**/*.ts', '!**/node_modules/**'],
-    coverageThreshold: {
-        global: {
-            branches: 1,
-            functions: 1,
-            lines: 1,
-            statements: 1,
-        },
-    },
-    coverageReporters: ['text-summary', 'lcov'],
-    moduleNameMapper: {
-        '@notifications/(.*)': ['<rootDir>/src/$1']
-    }
+  },
+  coverageReporters: ["text-summary", "lcov"],
+  moduleNameMapper: {
+    "@notifications/(.*)": ["<rootDir>/src/$1"],
+  },
 };
 
 export default config;

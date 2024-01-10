@@ -15,7 +15,7 @@ const sendEmail = async (
   locals: IEmailLocals,
 ): Promise<void> => {
   try {
-    await emailTemplatesSendEmail(template, recieverEmail, locals)
+    await emailTemplatesSendEmail(template, recieverEmail, locals);
   } catch (error) {
     log.log("error", "NotificationService sendEmail() method:", error);
   }
