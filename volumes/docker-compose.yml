@@ -95,28 +95,28 @@ services:
     depends_on:
       - elasticsearch
 
-  notifications: 
-    container_name: notification_container
-    build: 
-      context: ../services/notification-service
-      dockerfile: Dockerfile.dev
-    restart: always
-    ports:
-      - 8001:8001
-    env_file: ../services/notification-service/.env
-    environment:
-      - ENABLE_APM=0
-      - NODE_ENV=development
-      - CLIENT_URL=http://localhost:3000
-      - RABBITMQ_ENDPOINT=amqp://uddeepta:12345678@rabbitmq_container:5672
-      - SENDER_EMAIL=vince.lakin@ethereal.email
-      - SENDER_EMAIL_PASSWORD=Rm85Cm1beGpPwrehVn
-      - ELASTIC_SEARCH_URL=http://elasticsearch_container:9200
-      - ELASTIC_APM_SERVER_URL=http://localhost:8200
-      - ELASTIC_APM_SECRET_TOKEN=
-    depends_on:
-      - rabbitmq
-      - elasticsearch
+  # notifications: 
+  #   container_name: notification_container
+  #   build: 
+  #     context: ../services/notification-service
+  #     dockerfile: Dockerfile.dev
+  #   restart: always
+  #   ports:
+  #     - 8001:8001
+  #   env_file: ../services/notification-service/.env
+  #   environment:
+  #     - ENABLE_APM=0
+  #     - NODE_ENV=development
+  #     - CLIENT_URL=http://localhost:3000
+  #     - RABBITMQ_ENDPOINT=amqp://uddeepta:12345678@rabbitmq_container:5672
+  #     - SENDER_EMAIL=vince.lakin@ethereal.email
+  #     - SENDER_EMAIL_PASSWORD=Rm85Cm1beGpPwrehVn
+  #     - ELASTIC_SEARCH_URL=http://elasticsearch_container:9200
+  #     - ELASTIC_APM_SERVER_URL=http://localhost:8200
+  #     - ELASTIC_APM_SECRET_TOKEN=
+  #   depends_on:
+  #     - rabbitmq
+  #     - elasticsearch
 
 networks:
   elastic:
