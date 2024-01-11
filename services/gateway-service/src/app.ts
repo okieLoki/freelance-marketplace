@@ -1,11 +1,15 @@
-import express from "express";
+import express, {Express} from 'express'
+import GatewayServer from '@gateway/server';
 
-const app = express();
+class Application{
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+  public initialize(): void{
+    const app: Express = express();
+    const server: GatewayServer = new GatewayServer(app);
+    server.start();
+  }
+}
 
-app.listen(3000, () => {
-  console.log("App listening on port 3000!");
-});
+const application: Application = new Application()
+
+application.initialize();

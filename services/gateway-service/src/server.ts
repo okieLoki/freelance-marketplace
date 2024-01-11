@@ -7,12 +7,17 @@ import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 import { StatusCodes } from "http-status-codes";
+import http from "http";
 
 
 const SERVER_PORT = 8000;
-const log: Logger = winstonLogger("", "apiGatewayServer", "debug");
+const log: Logger = winstonLogger(
+    "http://localhost:9200",
+    "apiGatewayServer",
+    "debug"
+);
 
-class gatewayServer {
+class GatewayServer {
     private app: Application;
 
     constructor(app: Application) {
@@ -25,6 +30,8 @@ class gatewayServer {
         this.routesMiddleware(this.app);
         this.startElasticSearch();
         this.errorHandler(this.app);
+
+        this.startServer(this.app);
     }
 
     private securityMiddleware(app: Application): void {
@@ -76,7 +83,7 @@ class gatewayServer {
 
         app.use(
             (err: IErrorResponse, req: Request, res: Response, next: NextFunction) => {
-                log.log("error", `GatewayService Error: ${err.message}`);
+                log.log("error", `GatewayService Error: ${err}`);
                 if (err instanceof CustomError) {
                     return res.status(err.statusCode).json({ errors: err.serializeErrors() });
                 }
@@ -84,6 +91,19 @@ class gatewayServer {
             }
         )
     }
+
+    private startServer(app: Application): void {
+        try {
+            const httpServer: http.Server = new http.Server(app);
+            log.info(`Worker with process id ${process.pid} started on GatewayService`);
+
+            httpServer.listen(SERVER_PORT, () => {
+                log.info(`GatewayService listening on port ${SERVER_PORT}`);
+            })
+        } catch (error) {
+            log.log("error", `GatewayService startServer() error method: ${error}`)
+        }
+    }
 }
 
-export default gatewayServer;
+export default GatewayServer;
