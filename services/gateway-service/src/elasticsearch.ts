@@ -1,6 +1,6 @@
 import { winstonLogger } from "okieloki-jobber-lib";
 import { Logger } from "winston";
-import config from '@gateway/config'
+import { config } from '@gateway/config'
 import { Client } from "@elastic/elasticsearch";
 import { ClusterHealthHealthResponseBody } from "@elastic/elasticsearch/lib/api/types";
 
@@ -22,7 +22,7 @@ class ElasticSearch {
         while (!isConnected) {
             try {
                 const health: ClusterHealthHealthResponseBody = await this.esClient.cluster.health({})
-                log.info(`ElasticSearch cluster health: ${health}`)
+                log.info(`ElasticSearch cluster health: ${health.status}`)
                 isConnected = true
             } catch (error) {
                 log.error(`Connection to Elastic Search Failed. Retrying....`)

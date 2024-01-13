@@ -12,8 +12,9 @@ import cors from "cors";
 import compression from "compression";
 import { StatusCodes } from "http-status-codes";
 import http from "http";
-import config from "@gateway/config";
+import { config } from "@gateway/config";
 import elastic from "@gateway/elasticsearch";
+import { appRoutes } from "@gateway/routes";
 
 const SERVER_PORT = 8000;
 const log: Logger = winstonLogger(
@@ -34,8 +35,7 @@ class GatewayServer {
     this.standardMiddleware(this.app);
     this.routesMiddleware(this.app);
     this.startElasticSearch();
-    this.errorHandler(this.app);
-
+    this.errorHandler(this.app); 
     this.startServer(this.app);
   }
 
@@ -44,7 +44,7 @@ class GatewayServer {
     app.use(
       cookieSession({
         name: "session",
-        keys: [],
+        keys: [config.SECRET_KEY_ONE, config.SECRET_KEY_TWO],
         maxAge: 24 * 7 * 60 * 60 * 1000, // 7 days
         secure: false,
         // sameSite: 'none',
@@ -70,7 +70,9 @@ class GatewayServer {
     );
   }
 
-  private routesMiddleware(app: Application): void {}
+  private routesMiddleware(app: Application): void {
+    appRoutes(app);
+  }
 
   private startElasticSearch(): void {
     elastic.checkConnection();
