@@ -1,0 +1,24 @@
+import axios from "axios";
+import jwt from "jsonwebtoken";
+import { config } from "@gateway/config";
+
+class AxiosService {
+  public axios: ReturnType<typeof axios.apply>
+
+  constructor(baseUrl: string, serviceName: string){
+  }
+
+  public axiosCreateInstance(baseUrl: string, serviceName?: string) : ReturnType<typeof axios.create>{
+    let gatewayToken = '';
+
+    if(serviceName){
+      gatewayToken = jwt.sign({
+        id: serviceName
+      },
+      config.GATEWAY_JWT_TOKEN
+      )
+    }
+  }
+}
+
+export { AxiosService } 
